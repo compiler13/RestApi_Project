@@ -1,11 +1,5 @@
-from rest_framework import serializers
-from task1.models import Language
-from task1.models import Application
-from task1.models import Product
-from task1.models import Website
-from task1 .models import Contact
-from task1.models import Profession
-from task1 .models import Friend
+from rest_framework import serializers 
+from task1.models import ( Language, Application, Product, Website, Contact, Profession, Friend )
 
 
 class CompilerSerializer(serializers.ModelSerializer):
@@ -17,12 +11,21 @@ class CompilerSerializer(serializers.ModelSerializer):
          )
 
 
-
-
 class ApplicationSerializers(serializers.ModelSerializer):
     class Meta:
         model = Application 
         fields = (
+         'id'
+         'name',
+         'description',
+         'language', 
+        )
+
+class ApplicationDetailsSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Application 
+        fields = (
+       
          'name',
          'description',
          'language', 
@@ -58,8 +61,12 @@ class ProductDetailsSerializers(serializers.ModelSerializer):
         )
 
 
-
 class ProfessionSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Profession
+        fields = ('occupation', 'id')
+
+class ProfessionDetailsSerializers(serializers.ModelSerializer):
     class Meta:
         model = Profession
         fields = ('occupation',)
@@ -108,32 +115,37 @@ class FriendBasicSerializers(serializers.ModelSerializer):
         model = Friend
         fields = ('friend1', 'friend2',)
 
-
-    
-        
-
-
+  
 class WebsiteSerializers(serializers.ModelSerializer):
-    # app1 = ApplicationSerializers()
-    # app2 = ProductSerializers() 
-
-    class Meta:
+     app1 = ApplicationSerializers()
+     app2 = ProductSerializers()
+     class Meta:
+            model = Website
+            fields = (
+            'id'
+            'app1', 
+            'app2',
+            'app3',
+            )
+            
+class WebsiteDetailsSerializers(serializers.ModelSerializer):
+     app1 = ApplicationSerializers()
+     app2 = ProductSerializers()
+     class Meta:
         model = Website
         fields = (
             'app1', 
-            #'app2',
+            'app2',
             'app3',
             
  
             )
 
-
 class WebsiteGETSerializers(serializers.ModelSerializer):
     app1 = ApplicationGETSerializers()
-    #app2 = ProductSerializers() 
+    app2 = ProductSerializers() 
     app3 = ContactSerializers()
     app4 = ProfessionSerializers()
-
 
     class Meta:
         model = Website
